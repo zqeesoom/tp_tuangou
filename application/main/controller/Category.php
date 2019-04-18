@@ -26,12 +26,15 @@ class Category extends Controller{
 
     //显示生活服务分类列表
     public function index(){
-
         //获取顶级的分类数据
-        $categorys = $this->obj->getFirstCategory()->toArray();
+        $categorys = $this->obj->getFirstCategory(0,true);
+        //获取分页显示
+        $page = $categorys->render();
 
         //模板赋值
-        $this->assign('categorys',$categorys);
+        $this->assign(['categorys'=>$categorys,
+                'page'=>$page
+            ]);
         return $this->fetch();
 
     }
@@ -62,7 +65,11 @@ class Category extends Controller{
         $categorys =$this->obj->getFirstCategory($parentId)->toArray();
 
         //模板赋值
-        $this->assign("categorys",$categorys);
+        $this->assign(["categorys"=>$categorys,
+
+            'page'=>0//分类的子类不分页
+
+        ]);
         return $this->fetch('index');
 
     }
@@ -77,5 +84,15 @@ class Category extends Controller{
             $this->redirect(url('index'));
         }
         $this->error('修改失败');
+    }
+
+    //删除
+    public function softDelData(){
+       $id =  Request::param('id');
+       $res = $this->obj->softDelById($id);
+       if($res){
+           $this->success('删除成功','index');
+        }
+        $this->error('删除失败');
     }
 }

@@ -17,7 +17,7 @@ class Category extends Model
     //设置软删除字段
     use SoftDelete;
     protected $deleteTime = 'delete_time';
-    //标记0代表删除。
+    //标记0代表没有被删除。或者理解：查询时，会过滤不是默认0标记的数据。
     protected $defaultSoftDelete = 0;
 
     //添加数据
@@ -29,8 +29,11 @@ class Category extends Model
     }
 
     //获取分类列表
-    public function getFirstCategory($id = 0){
+    public function getFirstCategory($id = 0,$isPage = false){
 
+        if($isPage){
+            return self::where('parent_id',$id)->paginate(15);
+        }
         return self::where('parent_id',$id)->select();
 
     }
@@ -51,6 +54,17 @@ class Category extends Model
         }
         return false;
     }
+
+    //删除数据
+    public function softDelById($id){
+
+        if(is_numeric($id)){
+            $rows = self::where("id",$id)->useSoftDelete('delete_time',time())->delete();
+            return $rows;
+        }
+
+    }
+
 
 
 }
