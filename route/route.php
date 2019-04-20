@@ -8,13 +8,17 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
+/*
 Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
+   return 'hello,ThinkPHP5!';
 });
 
-Route::get('hello/:name', 'index/hello');
+Route::get('hello/:name', 'index/index/hello');
 
 return [
 
-];
+];*/
+Route::get('list_order/:id/:val', 'main/category/setListOrder')->pattern([
+        'id' => '\d+',
+        'val'=>'\d+'
+    ]);

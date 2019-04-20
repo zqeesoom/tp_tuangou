@@ -10,7 +10,7 @@ namespace app\common\model;
 use think\Model;
 use think\model\concern\SoftDelete;//引入软删除除
 
-class Category extends Model
+class City extends Model
 {
     //开启自动写入时间搓
     protected $autoWriteTimestamp = true;
@@ -41,6 +41,7 @@ class Category extends Model
     public function getTreeCategory(){
 
         $data = self::select()->toArray();
+
         return getTree($data);
 
     }

@@ -13,18 +13,18 @@ use Request;
 use app\main\validate\CategoryVali;
 
 
-//生活服务分类业务逻辑
-class Category extends Controller{
+//城市分类
+class City extends Controller{
 
     //实例化模型
     private $obj;
     public function initialize(){
-        $this->obj = new \app\common\model\Category;
+        $this->obj = new \app\common\model\City;
     }
 
 
 
-    //显示生活服务分类列表
+    //显示城市分类列表
     public function index(){
         //获取顶级的分类数据
         $categorys = $this->obj->getFirstCategory(0,true);
@@ -35,6 +35,8 @@ class Category extends Controller{
         $this->assign(['categorys'=>$categorys,
                 'page'=>$page
             ]);
+        //echo"<pre>";
+        //var_dump($categorys);
         return $this->fetch();
 
     }
